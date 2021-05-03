@@ -10,19 +10,19 @@ let blackJackGame = {
   /* Array of card names so we could use them later in the template string */
   cards: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"],
   cardsMap: {
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-    "10": 10,
-    "J": 10,
-    "Q": 10,
-    "K": 10,
-    "A": 10,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
+    J: 10,
+    Q: 10,
+    K: 10,
+    A: 10,
   },
 };
 const YOU = blackJackGame["you"];
@@ -35,11 +35,15 @@ document
 document
   .querySelector("#blackJack-deal-button")
   .addEventListener("click", blackjackDeal);
+
 //Hit button function
 function blackJackHit() {
   let card = randomCard();
   showCard(YOU, card);
+  upDateScore(YOU, card);
+  showScore(YOU)
 }
+
 //Helper function that creates randomCard
 function randomCard() {
   let randomIndex = Math.floor(Math.random() * 13);
@@ -64,16 +68,14 @@ function blackjackDeal() {
     dealerImages[i].remove();
   }
 }
-
 function upDateScore(activePlayer, card) {
-
   //we increment active player score to value of given card in our card map
-  activePlayer['score'] += blackJackGame['cardsMap'][card];
-/*   for (let key in blackJackGame.cardsMap) {
-    if (blackJackGame.cardsMap.hasOwnProperty(key)) {
-      console.log(`${key} : ${blackJackGame.cardsMap[key]}`);
-    }
-  } */
+  activePlayer["score"] += blackJackGame["cardsMap"][card];
+  console.log(activePlayer["score"]);
 }
 
-upDateScore();
+//Update frond end
+function showScore(activePlayer) { 
+  document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+  console.log(activePlayer['scoreSpan'])
+}
