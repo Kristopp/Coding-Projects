@@ -55,9 +55,11 @@ function randomCard() {
 }
 //function that renders card
 function showCard(activePlayer, card) {
-  let cardImage = document.createElement("img");
-  cardImage.src = `static/images/${card}.png`;
-  document.querySelector(activePlayer["div"]).appendChild(cardImage);
+  if (activePlayer["score"] <= 21) {
+    let cardImage = document.createElement("img");
+    cardImage.src = `static/images/${card}.png`;
+    document.querySelector(activePlayer["div"]).appendChild(cardImage);
+  }
 }
 //Deal button removes all cards and creates new cards
 function blackjackDeal() {
@@ -82,7 +84,7 @@ function upDateScore(activePlayer, card) {
       activePlayer["score"] += blackJackGame["cardsMap"][card][0];
     }
   } else {
-    //if card is not ace just increment active player score with card value 
+    //if card is not ace just increment active player score with card value
     activePlayer["score"] += blackJackGame["cardsMap"][card];
   }
   // if ace keeps me below 21 else add 11
@@ -90,6 +92,11 @@ function upDateScore(activePlayer, card) {
 
 //Update frond end
 function showScore(activePlayer) {
-  document.querySelector(activePlayer["scoreSpan"]).textContent =
-    activePlayer["score"];
+  if (activePlayer["score"] > 21) {
+    document.querySelector(activePlayer["scoreSpan"]).textContent = "BUST";
+    document.querySelector(activePlayer["scoreSpan"]).style.color = "red";
+  } else {
+    document.querySelector(activePlayer["scoreSpan"]).textContent =
+      activePlayer["score"];
+  }
 }
