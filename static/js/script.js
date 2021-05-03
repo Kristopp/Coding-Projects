@@ -22,7 +22,7 @@ let blackJackGame = {
     J: 10,
     Q: 10,
     K: 10,
-    A: 10,
+    A: [1, 11],
   },
 };
 const YOU = blackJackGame["you"];
@@ -39,9 +39,13 @@ document
 //Hit button function
 function blackJackHit() {
   let card = randomCard();
+  console.log(card);
+  /*  if(card === blackJackGame.cardsMap.A) { 
+    console.log("ACE")
+  } */
   showCard(YOU, card);
   upDateScore(YOU, card);
-  showScore(YOU)
+  showScore(YOU);
 }
 
 //Helper function that creates randomCard
@@ -69,13 +73,23 @@ function blackjackDeal() {
   }
 }
 function upDateScore(activePlayer, card) {
-  //we increment active player score to value of given card in our card map
-  activePlayer["score"] += blackJackGame["cardsMap"][card];
-  console.log(activePlayer["score"]);
+  //we need check if card is an ace
+  if (card === "A") {
+    //If ace buts us above 21 ace value becomes 1 else 11
+    if (activePlayer["score"] + blackJackGame["cardsMap"][card][1] <= 21) {
+      activePlayer["score"] += blackJackGame["cardsMap"][card][1];
+    } else {
+      activePlayer["score"] += blackJackGame["cardsMap"][card][0];
+    }
+  } else {
+    //if card is not ace just increment active player score with card value 
+    activePlayer["score"] += blackJackGame["cardsMap"][card];
+  }
+  // if ace keeps me below 21 else add 11
 }
 
 //Update frond end
-function showScore(activePlayer) { 
-  document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
-  console.log(activePlayer['scoreSpan'])
+function showScore(activePlayer) {
+  document.querySelector(activePlayer["scoreSpan"]).textContent =
+    activePlayer["score"];
 }
