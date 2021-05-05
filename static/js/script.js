@@ -73,7 +73,15 @@ function blackjackDeal() {
   for (let i = 0; i < dealerImages.length; i++) {
     dealerImages[i].remove();
   }
+YOU['score'] = 0;
+DEALER['score'] = 0
+
+document.querySelector(YOU['scoreSpan']).textContent = 0;
+document.querySelector(DEALER['scoreSpan']).textContent = 0;
+document.querySelector(YOU['scoreSpan']).style.color = "#212529";
+document.querySelector(DEALER['scoreSpan']).style.color = "#212529";
 }
+
 function upDateScore(activePlayer, card) {
   //we need check if card is an ace
   if (card === "A") {
